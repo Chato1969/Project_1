@@ -2,7 +2,7 @@
 title: "Project 1 Write Up"
 author: "Manuel V."
 date: "2023-04-09"
-output: html_document
+output: pdf_document
 ---
 Final GitHub Link https://github.com/Chato1969/Project_1
 Collaboration GitHub https://github.com/DivaMC/Project_1
