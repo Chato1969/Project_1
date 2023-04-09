@@ -4,8 +4,8 @@ author: "Wesley Newcomb"
 date: "2023-04-08"
 output:
   pdf_document: default
-  word_document: default
   html_document: default
+  word_document: default
 df_print: paged
 ---
 ---
@@ -139,27 +139,6 @@ if (confirmed_ordered[1,1] == death_ordered[1,1] &&
   cat(confirmed_ordered[1,1], ", ", confirmed_ordered[1,2], 
     " is the most likely origin of the virus. \n", sep="")
 }
-
-# Find greatest number of deaths on first day
-for(i in deaths_df$X1.22.20) {
-  if(i > 0) {
-    print(i)
-  }
-}
-
-max(deaths_df$X1.22.20)
-first_city_deaths <- deaths_df$Province.State[which.max(deaths_df$X1.22.20)]
-
-# Find greatest number of confirmed cases on first day
-max(confirmed_df$X1.22.20)
-first_city_confirmations <- confirmed_df$Province.State[which.max(confirmed_df$X1.22.20)]
-
-# Find and print origin city
-if (first_city_deaths == first_city_confirmations) {
-  covid_city_origin <- first_city_confirmations
-}
-print(covid_city_origin)
-
 ```
 ```{r ob1.1}
 # Notice: Copyright Diva Medina Camp Inc.
@@ -546,15 +525,13 @@ kable(top_5_confirmed)
 ```
 
 ### GitHub Log
-
-#```{bash gitlog}
-# By Wesley: git log --pretty=format:"%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b"
-# By Diva: Biscuit:Project_1_Wesv4 miuixtli$ git log --pretty=format:"%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b"
-#```
-
-```{r, echo=FALSE}
+```{r}
 # Notice: Copyright Wesley C Newcomb Inc.
 #Could not get the above script to work correctly on my system.This is the output from running the above script directly from the command line:
+#```{bash gitlog}
+#By Wesley: git log --pretty=format:"%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b"
+#By Diva: Biscuit:Project_1_Wesv4 miuixtli$ git log --pretty=format:"%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b"
+#```
 
 cat("\n",
     "Subject:", 'Updated responses to be more generic and automatic such that they are created based on data',"\n",'pulled automatically from the table. Fixed typos and minor bugs.',"\n",
