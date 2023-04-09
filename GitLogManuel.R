@@ -1,0 +1,97 @@
+Manuels-MBP:Project1 mvnny$ pwd
+/Users/mvnny/Library/Mobile Documents/com~apple~CloudDocs/Palomar/R Programming 165/Project 1 Final/Project1
+Manuels-MBP:Project1 mvnny$ git log
+commit b9fab279e64ab1a9e7190f17fa3601f9404029cb (HEAD -> main, origin/main, origin/HEAD)
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 13:54:25 2023 -0700
+
+Added Objective 1 and 2
+
+commit ee4bfd86cc34401222aabf4f82eb9c489ac97cf0
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 13:45:25 2023 -0700
+
+Added Objective 4 and outlines Objectives 1-3
+
+commit c177e309adef63c33db1afa46e6d644d74cecb24
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 13:42:44 2023 -0700
+
+Objective 4 completed
+
+commit 894f2eb701e55c5e31e3df59aefb0ce65abdd481
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 13:40:48 2023 -0700
+
+Created Objective 4
+
+commit 424c1993596e3940a1700c6018ebf33d0c939e5c
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 13:36:31 2023 -0700
+
+Completed Objective 5
+
+commit 781f47924647081dc68cc3384e6c952d545296f5
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 13:35:22 2023 -0700
+
+Completed Objective 5
+
+commit 12abe576b9a5443bce20b6f212839f7cf0289ec5
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 13:24:27 2023 -0700
+
+Completed Objective 5
+
+commit 7fc1ac718608a13d6236a83b57022ec343909dd5
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 08:27:47 2023 -0700
+
+Created Objective 4 R file
+
+commit c14ceb15ff09831b0c86ce64aeac81cfb411cc1c
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 08:27:21 2023 -0700
+
+Added Objective 5
+
+commit f399136bf6b63f683e5129ba6617e50cd648fb92
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 08:12:01 2023 -0700
+
+Selecting Top 5 Countries
+
+commit 6439c7379e2a90467d25d64d46565daa821405ad
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 08:10:11 2023 -0700
+
+Added formatting to Rmd file
+
+commit e8a643ad209123991f92b6a3812f92f810724a5d
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 08:02:06 2023 -0700
+
+Created Personal Project Report
+
+commit c3f5d6f5714a53c9bb189a821841064a2e0f6e37
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 07:55:08 2023 -0700
+
+Initalized and Calculated Sums of Confirmed Cases and Deaths
+
+commit 6d945ce50e42fc5a5f1b65a15a9341cccfa623f9
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 07:51:25 2023 -0700
+
+Extracting Unique Country Names
+
+commit f07a92fe45489d2bf0001a65c28be7e1c9884699
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 07:49:48 2023 -0700
+
+Loading CSV files
+
+commit 1d961b81c69c59c366cfff1c13d8f070dfb9d054
+Author: Manuel Vargas <mvargas5897@student.palomar.edu>
+  Date:   Sat Apr 8 07:48:13 2023 -0700
+
