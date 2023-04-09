@@ -94,7 +94,7 @@ This project will encompass many of the lessons we have learned throughout the c
 ### Objective 1
 CSIT-165’s first objective is to determine where COVID-19 originated from. Predict where the origin started based on the area with the greatest number of confirmations and deaths on the first recorded day in the data set. Show this is the origin using an if statement.
 ```{r ob1}
-
+# Notice: Copyright Wesley C Newcomb Inc.
 #confirmed_df<-read.csv("data/time_series_covid19_confirmed_global.csv", 
 #                       header=TRUE, stringsAsFactors=FALSE)
 confirmed_df <- read.csv("https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", stringsAsFactors=FALSE)
@@ -161,12 +161,36 @@ if (first_city_deaths == first_city_confirmations) {
 print(covid_city_origin)
 
 ```
+```{r ob1.1}
+# Notice: Copyright Diva Medina Camp Inc.
+# Get csv files from CSSEGISandData/COVID-19 database
+covid_confirmations <- read.csv("https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", stringsAsFactors=FALSE)
+covid_deaths <- read.csv("https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", stringsAsFactors=FALSE)
+covid_recoveries <- read.csv("https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv", stringsAsFactors=FALSE)
+# Find greatest number of deaths on first day
+for(i in covid_deaths$X1.22.20) {
+  if(i > 0) {
+    print(i)
+  }
+}
+max(covid_deaths$X1.22.20)
+first_city_deaths <- covid_deaths$Province.State[which.max(covid_deaths$X1.22.20)]
+# Find greatest number of confirmed cases on first day
+max(covid_confirmations$X1.22.20)
+first_city_confirmation <- covid_confirmations$Province.State[which.max(covid_confirmations$X1.22.20)]
+# Find and print city of origin
+if (first_city_deaths == first_city_confirmation) {
+  covid_city_origin <- first_city_confirmation
+}
+print(covid_city_origin)
+```
 Based on the data above: Hubei, China is the most likely origin of the virus.  This is based on Hubei, China having by far the most confirmed cases and is the only region with any recoveries or deaths on the first day of data avaliable.  Also, all other regions that have confirmed cases on the first day are regions that are near Hubei. The conditional statement also proves that Hubei is the most likely origin of the virus because it shows that the place with the most deaths, recovered, and confirmed cases on the first day is Hubei.
 
 
 ### Objective 2
 Where is the most recent area to have a first confirmed case? To do this, you will need to use a for loop, if statement, and subsets.
 ```{r ob2}
+# Notice: Copyright Wesley C Newcomb Inc.
 #confirmed_df<-read.csv("data/time_series_covid19_confirmed_global.csv", 
 #                       header=TRUE, stringsAsFactors=FALSE)
 confirmed_df <- read.csv("https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", stringsAsFactors=FALSE)
@@ -201,26 +225,31 @@ for(i in 1:nrow(recent_df))
     }
   }
 }
+```
 
+```{r ob2.1}
+# Notice: Copyright Diva Medina Camp Inc.
 ## Most recent area to have a confirmed case
 ## Use a for loop, if statement, and subsets.
-
-recent_confirmed_df <- c()
-
-for (i in 1:nrow(confirmed_df)) {
-  if (confirmed_df$X3.9.23[i] > confirmed_df$X3.8.23[i]) {
-    recent_confirmed_df <- c(recent_confirmed_df,confirmed_df$Country.Region[i])
-  }
+recent_confirmations <- c()
+for (i in 1:nrow(covid_confirmations)) {
+  if (covid_confirmations$X3.9.23[i] > covid_confirmations$X3.8.23[i]) {
+    recent_confirmations <- c(recent_confirmations,covid_confirmations$Country.Region[i])
+   }
 }
-
-print(recent_confirmed_df)
+print(recent_confirmations)
+# R Solution
+# recent_confirmations <- paste(covid_confirmations$Province.State[which(covid_confirmations$X3.9.23 > covid_confirmations$X3.8.23)], 
+#                              covid_confirmations$Country.Region[which(covid_confirmations$X3.9.23 > covid_confirmations$X3.8.23)])
 ```
+
 Most recent territories were found by going through the data and selecting the countries that did not have cases before yesterday and had their first cases today.  If there are no regions meeting this check, then each previous day is looked at until there are regions found with new cases.
 
 
 ### Objective 3
 How far away are the areas from objective 2 from where the first confirmed case(s) occurred? Please provide answer(s) in terms of miles. Use the function distm from the R package geosphere to calculate the distance between two coordinates in meters (geosphere::distm). You will need to convert the value returned by distm from meters to miles (this conversion is simple and can be found online). Please use a table or printed statement to describe what Province/State and Country/Region first confirmed cases occurred as well as the distance (in miles) away from the origin. Please print the following: {recent region} is {distance in miles} away from {origin city, origin country}.
 ```{r ob3}
+# Notice: Copyright Wesley C Newcomb Inc.
 origin_df<-arrange(confirmed_df, -X1.22.20)[1,]
 #confirmed_df<-read.csv("data/time_series_covid19_confirmed_global.csv", 
 #                       header=TRUE, stringsAsFactors=FALSE)
@@ -265,7 +294,36 @@ for (i in 1:nrow(recent_df)) {
       paste0(origin_df[1, "Province.State"], ","), 
       paste0(origin_df[1, "Country.Region"], "."), "\n")
 }
-
+```
+```{r ob3.1}
+# Notice: Copyright Diva Medina Camp Inc.
+library ("geosphere")
+# How far away are the areas from objective 2 from where the first confirmed case(s) occurred?
+first_city_confirmation_index <- which.max(covid_confirmations$X1.22.20)
+area_df <- data.frame(Long = covid_confirmations$Long[which(covid_confirmations$X3.9.23 > covid_confirmations$X3.8.23)]
+                      ,Lat = covid_confirmations$Lat[which(covid_confirmations$X3.9.23 > covid_confirmations$X3.8.23)])
+area_df_matrix <- as.matrix(area_df)
+# First City Coordinates
+First_City_Coords <- data.frame(Long = covid_confirmations$Long[first_city_confirmation_index]
+                           ,Lat = covid_confirmations$Lat[first_city_confirmation_index]) 
+First_City_Coords_matrix <- as.matrix(First_City_Coords)
+# Find distance between cities
+# Use function distm
+# distm(x, y)
+dist <- distm(area_df_matrix, First_City_Coords_matrix)
+# Convert from meters to miles
+dist_miles <- round(dist/1609.34, 2)
+# Please print the following:
+# {recent region} is {distance in miles} away from {origin city, origin country}
+distance_from_origin <- data.frame(City = covid_confirmations$Province.State[which(covid_confirmations$X3.9.23 > covid_confirmations$X3.8.23)]
+                                   ,Country = covid_confirmations$Country.Region[which(covid_confirmations$X3.9.23 > covid_confirmations$X3.8.23)]
+                                   ,Distance = dist_miles)
+for(i in 1:length(distance_from_origin$City)) {
+  print(paste(distance_from_origin$City[i], distance_from_origin$Country[i], " is ", 
+              distance_from_origin$Distance[i], "miles away from", 
+              covid_confirmations$Province.State[first_city_confirmation_index], 
+              covid_confirmations$Country.Region[first_city_confirmation_index]))
+}
 ```
 
 ### Objective 4
@@ -276,6 +334,7 @@ Which area of the world currently has the lowest risk score (if more than one, d
 
 #### Objective 4.1
 ```{r ob4.1}
+# Notice: Copyright Wesley C Newcomb Inc.
 # Datasets respresent a cumlative sum by date, so last column represents 
 # summation for region
 #confirmed_df<-read.csv("data/time_series_covid19_confirmed_global.csv", 
@@ -338,7 +397,57 @@ cat("Global Data\n",
     "Recovered:", global_recovered, "\n",
     "Risk:     ", global_risk, "\n",
     "Burden:   ", global_burden, "\n")
+```
+```{r ob4.1.1}
+# Notice: Copyright Manuel Ricardo Vargas Inc.
+# Import the data for global confirmed cases
+confirmed_url <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+confirmed_data <- read.csv(confirmed_url, header = TRUE, stringsAsFactors = FALSE)
 
+# Import the data for global deaths
+deaths_url <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+deaths_data <- read.csv(deaths_url, header = TRUE, stringsAsFactors = FALSE)
+
+# Remove cruise ships from the confirmed cases data
+confirmed_data <- confirmed_data[!(confirmed_data$Lat == 0 | is.na(confirmed_data$Lat)), ]
+confirmed_data <- confirmed_data[!(confirmed_data$Long == 0 | is.na(confirmed_data$Long)), ]
+
+# Remove cruise ships from the deaths data
+deaths_data <- deaths_data[!(deaths_data$Lat == 0 | is.na(deaths_data$Lat)), ]
+deaths_data <- deaths_data[!(deaths_data$Long == 0 | is.na(deaths_data$Long)), ]
+
+# Filter both confirmed and deaths data to only include common countries
+common_countries <- intersect(confirmed_data$Country.Region, deaths_data$Country.Region)
+confirmed_cases <- confirmed_data[confirmed_data$Country.Region %in% common_countries, c("Country.Region", tail(names(confirmed_data), n = 1))]
+deaths <- deaths_data[deaths_data$Country.Region %in% common_countries, c("Country.Region", tail(names(deaths_data), n = 1))]
+
+# Calculate risk scores
+risk_scores <- round(100 * deaths[, 2] / confirmed_cases[, 2], 2)
+
+# Create data frame with country names and risk scores
+risk_scores_df <- data.frame(Country = confirmed_cases$Country.Region, RiskScore = risk_scores)
+
+# Sort risk scores by ascending order and select first row
+lowest_risk <- risk_scores_df[order(risk_scores_df$RiskScore), ][1, ]
+
+# If there are multiple areas with lowest risk, select the one with most confirmations
+if (sum(!is.na(lowest_risk$Confirmations)) > 0) {
+  lowest_risk <- lowest_risk[which(lowest_risk$Confirmations == max(lowest_risk$Confirmations, na.rm = TRUE)), ]
+}
+
+# Display the result
+cat("The area with the lowest risk score is", lowest_risk$Country, "with a risk score of", lowest_risk$RiskScore, "and", lowest_risk$Confirmations, "confirmations.")
+
+# Sort risk scores by descending order and select first row
+highest_risk <- risk_scores_df[order(-risk_scores_df$RiskScore), ][1, ]
+
+# If there are multiple areas with highest risk, select the one with most confirmations
+if (sum(!is.na(highest_risk$Confirmations)) > 0) {
+  highest_risk <- highest_risk[which(highest_risk$Confirmations == max(highest_risk$Confirmations, na.rm = TRUE)), ]
+}
+
+# Display the result
+cat("The area with the highest risk score is", highest_risk$Country, "with a risk score of", highest_risk$RiskScore, "and", highest_risk$Confirmations, "confirmations.")
 ```
 Based on how the equation is written, any region which has had at least one person recover and no deaths will have a risk score of zero.  Examples of this can be seen in the "Lowest Risk Scores" table above.  When filtering out risk scores of 0, the regions of lowest risk can be seen in "Lowest risk scores, that are not zero" table above.  Any region that has no recoveries and yet at least one death will have infinite risk.  Examples of this can be seen in the "Highest risk scores" table above.  If filtering out regions that have infinite risk, we see that the regions in the "Highest risk scores, that are not infinite" table above.  When looking at the global score, it seems like the risk is high when considering it represents the people that have recovered versus those who have died.  This value seems especially high when looking at the regions in the "Lowest risk scores, that are not zero" table, but when compared to the "Highest risk scores, that are not infinite" table where the risk scores are extremely high, the global risk seems less significant.  This wide range in risk numbers indicates that while the risk in some regions is extremely high, for the most part, the risk is rather low globally.
 
@@ -352,6 +461,7 @@ You are asked to make two tables with the top 10 countries that have the most CO
 Hint: Sum each country’s counts by subsetting the data frame using a list of countries available in the data set. Use a for loop to iterate through the data frame using the list of countries. For each country, calculate the count sum and assign this value to a list.
 
 ```{r ob4.2}
+# Notice: Copyright Wesley C Newcomb Inc.
 # Datasets respresent a cumlative sum by date, so last column represents 
 # sumation for region
 #confirmed_df<-read.csv("data/time_series_covid19_confirmed_global.csv", 
@@ -398,7 +508,41 @@ cat("Top 5 deaths regions ")
 deaths_tb
 cat("Top 5 recovered regions")
 recovered_tb
+```
+```{r ob4.2.1}
+# Notice: Copyright Manuel Ricardo Vargas Inc.
+# Load the CSV files for COVID-19 data
+confirmed_cases <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", stringsAsFactors = FALSE)
+deaths <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", stringsAsFactors = FALSE)
 
+# Extract the country names from the data frames
+countries <- unique(confirmed_cases$Country.Region)
+
+# Initialize empty lists for the sums of confirmed cases and deaths
+confirmed_sums <- list()
+death_sums <- list()
+
+# Calculate the sums of confirmed cases and deaths for each country
+for (country in countries) {
+  confirmed_sums[[country]] <- sum(confirmed_cases[confirmed_cases$Country.Region == country, -(1:4)])
+  death_sums[[country]] <- sum(deaths[deaths$Country.Region == country, -(1:4)])
+}
+
+# Convert the sums into data frames
+confirmed_df <- data.frame(Country = names(confirmed_sums), Confirmed = unlist(confirmed_sums))
+death_df <- data.frame(Country = names(death_sums), Deaths = unlist(death_sums))
+
+# Sort the data frames by the values of confirmed cases and deaths, respectively
+confirmed_df <- confirmed_df[order(-confirmed_df$Confirmed),]
+death_df <- death_df[order(-death_df$Deaths),]
+
+# Select the top 5 countries with the most confirmed cases and deaths
+top_5_confirmed <- head(confirmed_df, 5)
+top_5_deaths <- head(death_df, 5)
+
+# Convert the data frames into tables using the kable function
+library(knitr)
+kable(top_5_confirmed)
 ```
 
 ### GitHub Log
@@ -408,6 +552,7 @@ recovered_tb
 #```
 
 ```{r, echo=FALSE}
+# Notice: Copyright Wesley C Newcomb Inc.
 #Could not get the above script to work correctly on my system.This is the output from running the above script directly from the command line:
 
 cat("\n",

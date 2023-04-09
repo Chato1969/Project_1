@@ -432,7 +432,8 @@ render your document.</p>
 from. Predict where the origin started based on the area with the
 greatest number of confirmations and deaths on the first recorded day in
 the data set. Show this is the origin using an if statement.</p>
-<pre class="r"><code>#confirmed_df&lt;-read.csv(&quot;data/time_series_covid19_confirmed_global.csv&quot;, 
+<pre class="r"><code># Notice: Copyright Wesley C Newcomb Inc.
+#confirmed_df&lt;-read.csv(&quot;data/time_series_covid19_confirmed_global.csv&quot;, 
 #                       header=TRUE, stringsAsFactors=FALSE)
 confirmed_df &lt;- read.csv(&quot;https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;, stringsAsFactors=FALSE)
 #deaths_df&lt;-read.csv(&quot;data/time_series_covid19_deaths_global.csv&quot;, 
@@ -521,6 +522,31 @@ if (first_city_deaths == first_city_confirmations) {
 }
 print(covid_city_origin)</code></pre>
 <pre><code>## [1] &quot;Hubei&quot;</code></pre>
+<pre class="r"><code># Notice: Copyright Diva Medina Camp Inc.
+# Get csv files from CSSEGISandData/COVID-19 database
+covid_confirmations &lt;- read.csv(&quot;https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;, stringsAsFactors=FALSE)
+covid_deaths &lt;- read.csv(&quot;https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv&quot;, stringsAsFactors=FALSE)
+covid_recoveries &lt;- read.csv(&quot;https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv&quot;, stringsAsFactors=FALSE)
+# Find greatest number of deaths on first day
+for(i in covid_deaths$X1.22.20) {
+  if(i &gt; 0) {
+    print(i)
+  }
+}</code></pre>
+<pre><code>## [1] 17</code></pre>
+<pre class="r"><code>max(covid_deaths$X1.22.20)</code></pre>
+<pre><code>## [1] 17</code></pre>
+<pre class="r"><code>first_city_deaths &lt;- covid_deaths$Province.State[which.max(covid_deaths$X1.22.20)]
+# Find greatest number of confirmed cases on first day
+max(covid_confirmations$X1.22.20)</code></pre>
+<pre><code>## [1] 444</code></pre>
+<pre class="r"><code>first_city_confirmation &lt;- covid_confirmations$Province.State[which.max(covid_confirmations$X1.22.20)]
+# Find and print city of origin
+if (first_city_deaths == first_city_confirmation) {
+  covid_city_origin &lt;- first_city_confirmation
+}
+print(covid_city_origin)</code></pre>
+<pre><code>## [1] &quot;Hubei&quot;</code></pre>
 <p>Based on the data above: Hubei, China is the most likely origin of
 the virus. This is based on Hubei, China having by far the most
 confirmed cases and is the only region with any recoveries or deaths on
@@ -534,7 +560,8 @@ recovered, and confirmed cases on the first day is Hubei.</p>
 <h3>Objective 2</h3>
 <p>Where is the most recent area to have a first confirmed case? To do
 this, you will need to use a for loop, if statement, and subsets.</p>
-<pre class="r"><code>#confirmed_df&lt;-read.csv(&quot;data/time_series_covid19_confirmed_global.csv&quot;, 
+<pre class="r"><code># Notice: Copyright Wesley C Newcomb Inc.
+#confirmed_df&lt;-read.csv(&quot;data/time_series_covid19_confirmed_global.csv&quot;, 
 #                       header=TRUE, stringsAsFactors=FALSE)
 confirmed_df &lt;- read.csv(&quot;https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;, stringsAsFactors=FALSE)
 recent_df&lt;-arrange(confirmed_df[confirmed_df[,ncol(confirmed_df)-1] == 0 
@@ -570,18 +597,16 @@ for(i in 1:nrow(recent_df))
   }
 }</code></pre>
 <pre><code>## Pitcairn Islands, United Kingdom has recently had their first confirmed case.</code></pre>
-<pre class="r"><code>## Most recent area to have a confirmed case
+<pre class="r"><code># Notice: Copyright Diva Medina Camp Inc.
+## Most recent area to have a confirmed case
 ## Use a for loop, if statement, and subsets.
-
-recent_confirmed_df &lt;- c()
-
-for (i in 1:nrow(confirmed_df)) {
-  if (confirmed_df$X3.9.23[i] &gt; confirmed_df$X3.8.23[i]) {
-    recent_confirmed_df &lt;- c(recent_confirmed_df,confirmed_df$Country.Region[i])
-  }
+recent_confirmations &lt;- c()
+for (i in 1:nrow(covid_confirmations)) {
+  if (covid_confirmations$X3.9.23[i] &gt; covid_confirmations$X3.8.23[i]) {
+    recent_confirmations &lt;- c(recent_confirmations,covid_confirmations$Country.Region[i])
+   }
 }
-
-print(recent_confirmed_df)</code></pre>
+print(recent_confirmations)</code></pre>
 <pre><code>##  [1] &quot;Albania&quot;              &quot;Algeria&quot;              &quot;Australia&quot;           
 ##  [4] &quot;Australia&quot;            &quot;Australia&quot;            &quot;Australia&quot;           
 ##  [7] &quot;Australia&quot;            &quot;Australia&quot;            &quot;Austria&quot;             
@@ -605,9 +630,8 @@ print(recent_confirmed_df)</code></pre>
 ## [61] &quot;Ukraine&quot;              &quot;United Arab Emirates&quot; &quot;United Kingdom&quot;      
 ## [64] &quot;United Kingdom&quot;       &quot;Venezuela&quot;</code></pre>
 <pre class="r"><code># R Solution
-#recent_confirmed_df &lt;- paste(confirmed_df$Province.State[which(confirmed_df$X3.9.23 &gt; confirmed_df$X3.8.23)], 
-#                            confirmed_df$Country.Region[which(confirmed_df$X3.9.23 &gt; confirmed_df$X3.8.23)])
-#print(recent_confirmed_df)</code></pre>
+# recent_confirmations &lt;- paste(covid_confirmations$Province.State[which(covid_confirmations$X3.9.23 &gt; covid_confirmations$X3.8.23)], 
+#                              covid_confirmations$Country.Region[which(covid_confirmations$X3.9.23 &gt; covid_confirmations$X3.8.23)])</code></pre>
 <p>Most recent territories were found by going through the data and
 selecting the countries that did not have cases before yesterday and had
 their first cases today. If there are no regions meeting this check,
@@ -626,7 +650,8 @@ printed statement to describe what Province/State and Country/Region
 first confirmed cases occurred as well as the distance (in miles) away
 from the origin. Please print the following: {recent region} is
 {distance in miles} away from {origin city, origin country}.</p>
-<pre class="r"><code>origin_df&lt;-arrange(confirmed_df, -X1.22.20)[1,]
+<pre class="r"><code># Notice: Copyright Wesley C Newcomb Inc.
+origin_df&lt;-arrange(confirmed_df, -X1.22.20)[1,]
 #confirmed_df&lt;-read.csv(&quot;data/time_series_covid19_confirmed_global.csv&quot;, 
 #                       header=TRUE, stringsAsFactors=FALSE)
 confirmed_df &lt;- read.csv(&quot;https://raw.githubusercontent.com/Chato1969/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;, stringsAsFactors=FALSE)
@@ -672,6 +697,99 @@ for (i in 1:nrow(recent_df)) {
       paste0(origin_df[1, &quot;Country.Region&quot;], &quot;.&quot;), &quot;\n&quot;)
 }</code></pre>
 <pre><code>## Pitcairn Islands is 8746.96 miles away from the virus origin in Hubei, China.</code></pre>
+<pre class="r"><code># Notice: Copyright Diva Medina Camp Inc.
+library (&quot;geosphere&quot;)
+# How far away are the areas from objective 2 from where the first confirmed case(s) occurred?
+first_city_confirmation_index &lt;- which.max(covid_confirmations$X1.22.20)
+area_df &lt;- data.frame(Long = covid_confirmations$Long[which(covid_confirmations$X3.9.23 &gt; covid_confirmations$X3.8.23)]
+                      ,Lat = covid_confirmations$Lat[which(covid_confirmations$X3.9.23 &gt; covid_confirmations$X3.8.23)])
+area_df_matrix &lt;- as.matrix(area_df)
+# First City Coordinates
+First_City_Coords &lt;- data.frame(Long = covid_confirmations$Long[first_city_confirmation_index]
+                           ,Lat = covid_confirmations$Lat[first_city_confirmation_index]) 
+First_City_Coords_matrix &lt;- as.matrix(First_City_Coords)
+# Find distance between cities
+# Use function distm
+# distm(x, y)
+dist &lt;- distm(area_df_matrix, First_City_Coords_matrix)
+# Convert from meters to miles
+dist_miles &lt;- round(dist/1609.34, 2)
+# Please print the following:
+# {recent region} is {distance in miles} away from {origin city, origin country}
+distance_from_origin &lt;- data.frame(City = covid_confirmations$Province.State[which(covid_confirmations$X3.9.23 &gt; covid_confirmations$X3.8.23)]
+                                   ,Country = covid_confirmations$Country.Region[which(covid_confirmations$X3.9.23 &gt; covid_confirmations$X3.8.23)]
+                                   ,Distance = dist_miles)
+for(i in 1:length(distance_from_origin$City)) {
+  print(paste(distance_from_origin$City[i], distance_from_origin$Country[i], &quot; is &quot;, 
+              distance_from_origin$Distance[i], &quot;miles away from&quot;, 
+              covid_confirmations$Province.State[first_city_confirmation_index], 
+              covid_confirmations$Country.Region[first_city_confirmation_index]))
+}</code></pre>
+<pre><code>## [1] &quot; Albania  is  4960.44 miles away from Hubei China&quot;
+## [1] &quot; Algeria  is  6327.14 miles away from Hubei China&quot;
+## [1] &quot;Australian Capital Territory Australia  is  5156.88 miles away from Hubei China&quot;
+## [1] &quot;New South Wales Australia  is  5132.81 miles away from Hubei China&quot;
+## [1] &quot;Northern Territory Australia  is  3231.78 miles away from Hubei China&quot;
+## [1] &quot;South Australia Australia  is  4846.19 miles away from Hubei China&quot;
+## [1] &quot;Tasmania Australia  is  5547.63 miles away from Hubei China&quot;
+## [1] &quot;Victoria Australia  is  5181.72 miles away from Hubei China&quot;
+## [1] &quot; Austria  is  5015.91 miles away from Hubei China&quot;
+## [1] &quot; Azerbaijan  is  3618.98 miles away from Hubei China&quot;
+## [1] &quot; Bahrain  is  3722.86 miles away from Hubei China&quot;
+## [1] &quot; Barbados  is  9345.19 miles away from Hubei China&quot;
+## [1] &quot; Belgium  is  5297.24 miles away from Hubei China&quot;
+## [1] &quot; Bolivia  is  11387.03 miles away from Hubei China&quot;
+## [1] &quot; Bulgaria  is  4665.79 miles away from Hubei China&quot;
+## [1] &quot; Burma  is  1185.83 miles away from Hubei China&quot;
+## [1] &quot;British Columbia Canada  is  5592.11 miles away from Hubei China&quot;
+## [1] &quot;Ontario Canada  is  6669.8 miles away from Hubei China&quot;
+## [1] &quot;Quebec Canada  is  6642.87 miles away from Hubei China&quot;
+## [1] &quot; Chile  is  12042.48 miles away from Hubei China&quot;
+## [1] &quot; Cote d&#39;Ivoire  is  7554.68 miles away from Hubei China&quot;
+## [1] &quot; Cuba  is  8759.71 miles away from Hubei China&quot;
+## [1] &quot; Czechia  is  4907.37 miles away from Hubei China&quot;
+## [1] &quot; Denmark  is  4928.15 miles away from Hubei China&quot;
+## [1] &quot; Ethiopia  is  4822.45 miles away from Hubei China&quot;
+## [1] &quot; Fiji  is  5503.47 miles away from Hubei China&quot;
+## [1] &quot; Finland  is  4251.24 miles away from Hubei China&quot;
+## [1] &quot; France  is  5561.51 miles away from Hubei China&quot;
+## [1] &quot; Germany  is  5061.55 miles away from Hubei China&quot;
+## [1] &quot; Guatemala  is  8887.15 miles away from Hubei China&quot;
+## [1] &quot; India  is  2185.45 miles away from Hubei China&quot;
+## [1] &quot; Indonesia  is  2187.16 miles away from Hubei China&quot;
+## [1] &quot; Iran  is  3407.35 miles away from Hubei China&quot;
+## [1] &quot; Israel  is  4487.71 miles away from Hubei China&quot;
+## [1] &quot; Jamaica  is  8996.19 miles away from Hubei China&quot;
+## [1] &quot; Japan  is  1536.31 miles away from Hubei China&quot;
+## [1] &quot; Korea, South  is  956.32 miles away from Hubei China&quot;
+## [1] &quot; Kosovo  is  4883.7 miles away from Hubei China&quot;
+## [1] &quot; Latvia  is  4379.19 miles away from Hubei China&quot;
+## [1] &quot; Lebanon  is  4361.62 miles away from Hubei China&quot;
+## [1] &quot; Malaysia  is  1959.34 miles away from Hubei China&quot;
+## [1] &quot; Mali  is  7051.8 miles away from Hubei China&quot;
+## [1] &quot; Mexico  is  8027.44 miles away from Hubei China&quot;
+## [1] &quot; Montenegro  is  4951.13 miles away from Hubei China&quot;
+## [1] &quot; Nepal  is  1693.71 miles away from Hubei China&quot;
+## [1] &quot;Niue New Zealand  is  6205.4 miles away from Hubei China&quot;
+## [1] &quot; Norway  is  4825.84 miles away from Hubei China&quot;
+## [1] &quot; Pakistan  is  2540.06 miles away from Hubei China&quot;
+## [1] &quot; Philippines  is  1384.87 miles away from Hubei China&quot;
+## [1] &quot; Poland  is  4701.39 miles away from Hubei China&quot;
+## [1] &quot; Qatar  is  3702.32 miles away from Hubei China&quot;
+## [1] &quot; Russia  is  2133.37 miles away from Hubei China&quot;
+## [1] &quot; Saudi Arabia  is  4096.29 miles away from Hubei China&quot;
+## [1] &quot; Serbia  is  4838.64 miles away from Hubei China&quot;
+## [1] &quot; Slovakia  is  4766.42 miles away from Hubei China&quot;
+## [1] &quot; Slovenia  is  5040.05 miles away from Hubei China&quot;
+## [1] &quot; South Africa  is  7226.35 miles away from Hubei China&quot;
+## [1] &quot; Sri Lanka  is  2580.62 miles away from Hubei China&quot;
+## [1] &quot; Sweden  is  4515.04 miles away from Hubei China&quot;
+## [1] &quot; US  is  7129.09 miles away from Hubei China&quot;
+## [1] &quot; Ukraine  is  4277.99 miles away from Hubei China&quot;
+## [1] &quot; United Arab Emirates  is  3594.43 miles away from Hubei China&quot;
+## [1] &quot;Turks and Caicos Islands United Kingdom  is  8798.46 miles away from Hubei China&quot;
+## [1] &quot; United Kingdom  is  5383.81 miles away from Hubei China&quot;
+## [1] &quot; Venezuela  is  9857.19 miles away from Hubei China&quot;</code></pre>
 </div>
 <div id="objective-4" class="section level3">
 <h3>Objective 4</h3>
@@ -693,7 +811,8 @@ what would their limitations be (what assumptions does risk score make
 and what important variables might be left out)?</p>
 <div id="objective-4.1" class="section level4">
 <h4>Objective 4.1</h4>
-<pre class="r"><code># Datasets respresent a cumlative sum by date, so last column represents 
+<pre class="r"><code># Notice: Copyright Wesley C Newcomb Inc.
+# Datasets respresent a cumlative sum by date, so last column represents 
 # summation for region
 #confirmed_df&lt;-read.csv(&quot;data/time_series_covid19_confirmed_global.csv&quot;, 
 #                       header=TRUE, stringsAsFactors=FALSE)
@@ -797,6 +916,56 @@ cat(&quot;Global Data\n&quot;,
 ##  Recovered: 0 
 ##  Risk:      Inf 
 ##  Burden:    Inf</code></pre>
+<pre class="r"><code># Notice: Copyright Manuel Ricardo Vargas Inc.
+# Import the data for global confirmed cases
+confirmed_url &lt;- &quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;
+confirmed_data &lt;- read.csv(confirmed_url, header = TRUE, stringsAsFactors = FALSE)
+
+# Import the data for global deaths
+deaths_url &lt;- &quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv&quot;
+deaths_data &lt;- read.csv(deaths_url, header = TRUE, stringsAsFactors = FALSE)
+
+# Remove cruise ships from the confirmed cases data
+confirmed_data &lt;- confirmed_data[!(confirmed_data$Lat == 0 | is.na(confirmed_data$Lat)), ]
+confirmed_data &lt;- confirmed_data[!(confirmed_data$Long == 0 | is.na(confirmed_data$Long)), ]
+
+# Remove cruise ships from the deaths data
+deaths_data &lt;- deaths_data[!(deaths_data$Lat == 0 | is.na(deaths_data$Lat)), ]
+deaths_data &lt;- deaths_data[!(deaths_data$Long == 0 | is.na(deaths_data$Long)), ]
+
+# Filter both confirmed and deaths data to only include common countries
+common_countries &lt;- intersect(confirmed_data$Country.Region, deaths_data$Country.Region)
+confirmed_cases &lt;- confirmed_data[confirmed_data$Country.Region %in% common_countries, c(&quot;Country.Region&quot;, tail(names(confirmed_data), n = 1))]
+deaths &lt;- deaths_data[deaths_data$Country.Region %in% common_countries, c(&quot;Country.Region&quot;, tail(names(deaths_data), n = 1))]
+
+# Calculate risk scores
+risk_scores &lt;- round(100 * deaths[, 2] / confirmed_cases[, 2], 2)
+
+# Create data frame with country names and risk scores
+risk_scores_df &lt;- data.frame(Country = confirmed_cases$Country.Region, RiskScore = risk_scores)
+
+# Sort risk scores by ascending order and select first row
+lowest_risk &lt;- risk_scores_df[order(risk_scores_df$RiskScore), ][1, ]
+
+# If there are multiple areas with lowest risk, select the one with most confirmations
+if (sum(!is.na(lowest_risk$Confirmations)) &gt; 0) {
+  lowest_risk &lt;- lowest_risk[which(lowest_risk$Confirmations == max(lowest_risk$Confirmations, na.rm = TRUE)), ]
+}
+
+# Display the result
+cat(&quot;The area with the lowest risk score is&quot;, lowest_risk$Country, &quot;with a risk score of&quot;, lowest_risk$RiskScore, &quot;and&quot;, lowest_risk$Confirmations, &quot;confirmations.&quot;)</code></pre>
+<pre><code>## The area with the lowest risk score is Antarctica with a risk score of 0 and confirmations.</code></pre>
+<pre class="r"><code># Sort risk scores by descending order and select first row
+highest_risk &lt;- risk_scores_df[order(-risk_scores_df$RiskScore), ][1, ]
+
+# If there are multiple areas with highest risk, select the one with most confirmations
+if (sum(!is.na(highest_risk$Confirmations)) &gt; 0) {
+  highest_risk &lt;- highest_risk[which(highest_risk$Confirmations == max(highest_risk$Confirmations, na.rm = TRUE)), ]
+}
+
+# Display the result
+cat(&quot;The area with the highest risk score is&quot;, highest_risk$Country, &quot;with a risk score of&quot;, highest_risk$RiskScore, &quot;and&quot;, highest_risk$Confirmations, &quot;confirmations.&quot;)</code></pre>
+<pre><code>## The area with the highest risk score is Korea, North with a risk score of 600 and confirmations.</code></pre>
 <p>Based on how the equation is written, any region which has had at
 least one person recover and no deaths will have a risk score of zero.
 Examples of this can be seen in the “Lowest Risk Scores” table above.
@@ -844,7 +1013,8 @@ package kable to convert those data frames into tables.</p>
 list of countries available in the data set. Use a for loop to iterate
 through the data frame using the list of countries. For each country,
 calculate the count sum and assign this value to a list.</p>
-<pre class="r"><code># Datasets respresent a cumlative sum by date, so last column represents 
+<pre class="r"><code># Notice: Copyright Wesley C Newcomb Inc.
+# Datasets respresent a cumlative sum by date, so last column represents 
 # sumation for region
 #confirmed_df&lt;-read.csv(&quot;data/time_series_covid19_confirmed_global.csv&quot;, 
 #                       header=TRUE, stringsAsFactors=FALSE)
@@ -1267,6 +1437,110 @@ Inf
 </td>
 <td style="text-align:right;">
 Inf
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Notice: Copyright Manuel Ricardo Vargas Inc.
+# Load the CSV files for COVID-19 data
+confirmed_cases &lt;- read.csv(&quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;, stringsAsFactors = FALSE)
+deaths &lt;- read.csv(&quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv&quot;, stringsAsFactors = FALSE)
+
+# Extract the country names from the data frames
+countries &lt;- unique(confirmed_cases$Country.Region)
+
+# Initialize empty lists for the sums of confirmed cases and deaths
+confirmed_sums &lt;- list()
+death_sums &lt;- list()
+
+# Calculate the sums of confirmed cases and deaths for each country
+for (country in countries) {
+  confirmed_sums[[country]] &lt;- sum(confirmed_cases[confirmed_cases$Country.Region == country, -(1:4)])
+  death_sums[[country]] &lt;- sum(deaths[deaths$Country.Region == country, -(1:4)])
+}
+
+# Convert the sums into data frames
+confirmed_df &lt;- data.frame(Country = names(confirmed_sums), Confirmed = unlist(confirmed_sums))
+death_df &lt;- data.frame(Country = names(death_sums), Deaths = unlist(death_sums))
+
+# Sort the data frames by the values of confirmed cases and deaths, respectively
+confirmed_df &lt;- confirmed_df[order(-confirmed_df$Confirmed),]
+death_df &lt;- death_df[order(-death_df$Deaths),]
+
+# Select the top 5 countries with the most confirmed cases and deaths
+top_5_confirmed &lt;- head(confirmed_df, 5)
+top_5_deaths &lt;- head(death_df, 5)
+
+# Convert the data frames into tables using the kable function
+library(knitr)
+kable(top_5_confirmed)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Country
+</th>
+<th style="text-align:right;">
+Confirmed
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:right;">
+53813184406
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+India
+</td>
+<td style="text-align:left;">
+India
+</td>
+<td style="text-align:right;">
+29131119694
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:right;">
+21182690594
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:right;">
+16105911886
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:right;">
+13686043720
 </td>
 </tr>
 </tbody>
