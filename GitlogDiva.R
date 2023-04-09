@@ -3,18 +3,28 @@
 #```{bash gitlog}
 #git log --pretty=format:"%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b"
 #```
-change to
-Example and Sample:
-  ```{r, echo=FALSE}
-cat("\n",
-    "Subject:", 'Update README.md',"\n",
-    "Author:", 'wesne',"\n",
-    "Date:", 'Thu, 6 Apr 2023 10:20:17 -0700',"\n",
-    "Body:","Added names to the README file","\n\n")
-```
-Enter $ git log --pretty=format:"%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b"
-Output:
-  Subject: Update README.md
-Author: wesne
-Date: Thu, 6 Apr 2023 10:20:17 -0700
-Body: Added names to the README file
+
+Biscuit:Project_1_Wesv4 miuixtli$ git log --pretty=format:"%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b"
+
+Subject: Created file.
+Author: Diva
+Date: Sat, 8 Apr 2023 19:39:43 -0700
+Body: 
+  
+  Subject: Corrected misspelling.
+Author: Diva
+Date: Sat, 8 Apr 2023 14:31:29 -0700
+Body: 
+  
+  Subject: Completed Objective 3.
+Author: Diva
+Date: Sat, 8 Apr 2023 14:10:48 -0700
+Body: 
+  
+  Subject: Complete Objective 2 program.
+Author: Diva
+  
+
+
+
+
